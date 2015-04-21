@@ -41,14 +41,14 @@ class CBinaryHeap
 bool CBinaryHeap::pushHeap(int nVal)
 {
     //bool bRet = false;
-    if(m_nHeapSize == m_nDataCount) return false;   //¶ÑÂú
+    if(m_nHeapSize == m_nDataCount) return false;   //å †æ»¡
 
-    m_pHeapArray[m_nDataCount] = nVal;              //ĞÂÈë¶ÑµÄÔªËØ×ÜÊÇÔÚÊı×é×îºó
+    m_pHeapArray[m_nDataCount] = nVal;              //æ–°å…¥å †çš„å…ƒç´ æ€»æ˜¯åœ¨æ•°ç»„æœ€å
     m_nDataCount++;
 
-    //µ÷Õû¶ÑµÄË³Ğò
-    //Èç¹û×Ó½Úµã±È¸¸½ÚµãĞ¡£¬Ôò½»»»Á½ÕßµÄÖµ
-    //ÒÀ´ÎÍùÉÏºÍ¸¸½Úµã±È½Ï£¬ÉÏÉı²Ù×÷
+    //è°ƒæ•´å †çš„é¡ºåº
+    //å¦‚æœå­èŠ‚ç‚¹æ¯”çˆ¶èŠ‚ç‚¹å°ï¼Œåˆ™äº¤æ¢ä¸¤è€…çš„å€¼
+    //ä¾æ¬¡å¾€ä¸Šå’Œçˆ¶èŠ‚ç‚¹æ¯”è¾ƒï¼Œä¸Šå‡æ“ä½œ
     int nIndex = m_nDataCount - 1;
     while(m_pHeapArray[nIndex] < m_pHeapArray[(nIndex-1)/2])
     {
@@ -62,23 +62,24 @@ bool CBinaryHeap::pushHeap(int nVal)
 
 int CBinaryHeap::popHeap()
 {
-    if(m_nDataCount == 0) return 0;     //¶ÑÎª¿Õ
-    int nRet = m_pHeapArray[0];         //³ö¶ÑµÄ×ÜÊÇµÚÒ»¸öÔªËØ
+    if(m_nDataCount == 0) return 0;     //å †ä¸ºç©º
+    int nRet = m_pHeapArray[0];         //å‡ºå †çš„æ€»æ˜¯ç¬¬ä¸€ä¸ªå…ƒç´ 
     int nIndex = 0;
     m_nDataCount--;
 
-    //½«×îºóÒ»¸öÔªËØ·Åµ½×îÇ°£¬Ö´ĞĞÏÂ½µ²Ù×÷
+    //å°†æœ€åä¸€ä¸ªå…ƒç´ æ”¾åˆ°æœ€å‰ï¼Œæ‰§è¡Œä¸‹é™æ“ä½œ
     SWAP(m_pHeapArray[0],m_pHeapArray[m_nDataCount]);
     while(nIndex < m_nDataCount)
     {
         int nlChild = nIndex * 2 + 1;
         int nrChild = nIndex * 2 + 2;
 
-        //×óÓÒº¢×Ó½ÚµãÍ¬Ê±´æÔÚ
+        //å·¦å³å­©å­èŠ‚ç‚¹åŒæ—¶å­˜åœ¨
         if(nlChild < m_nDataCount && nrChild < m_nDataCount)
         {
-            //×îºóÒ»¸öÔªËØ±Ø¶¨±È×óÓÒº¢×ÓÖĞµÄ½ÏĞ¡µÄÄÇ¸ö´ó
-            //ºÍ½ÏĞ¡µÄ½»»»
+            //æœ€åä¸€ä¸ªå…ƒç´ å¿…å®šæ¯”å·¦å³å­©å­ä¸­çš„è¾ƒå°çš„é‚£ä¸ªå¤§
+            //å’Œè¾ƒå°çš„äº¤æ¢
+            if(m_pHeapArray[nIndex] < m_pHeapArray[nlChild] && m_pHeapArray[nIndex] < m_pHeapArray[nrChild]) break;
             if(m_pHeapArray[nlChild] < m_pHeapArray[nrChild])
             {
                 SWAP(m_pHeapArray[nIndex],m_pHeapArray[nlChild]);
@@ -90,7 +91,7 @@ int CBinaryHeap::popHeap()
                 nIndex = nrChild;
             }
         }
-        //Ö»ÓĞ×óº¢×Ó,ÇÒ±È×óº¢×Ó´ó
+        //åªæœ‰å·¦å­©å­,ä¸”æ¯”å·¦å­©å­å¤§
         else if(nlChild < m_nDataCount && m_pHeapArray[nIndex] > m_pHeapArray[nlChild])
         {
             SWAP(m_pHeapArray[nIndex],m_pHeapArray[nlChild]);
